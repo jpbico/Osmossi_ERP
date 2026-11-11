@@ -55,7 +55,8 @@ CFO and controller for a small e-commerce business: practical, rigorous, focused
 | Supplier countries / currencies | Storefront positions Osmossi as curated **Colombian** craft, so suppliers are likely paid in **COP**; confirm per supplier | **To confirm** |
 | Partners and roles | **Juan Pablo**: CEO, founder (also admin of the ERP). **Andrea**: marketing. **Lucelly**: operations, founder. | Confirmed |
 | Ownership | Equal: **⅓ each** (33.3%) | Confirmed |
-| Partner funding | Partners pay company costs personally; treated as **capital contributions**. Inventory is bought on Juan Pablo's personal credit card. Return policy: `docs/modules/01-partner-expenses.md` §6 | Confirmed |
+| Partner funding | Partners pay company costs personally; treated as **capital contributions**. Inventory is bought on Juan Pablo's personal credit card. Returns: **70% to inventory / 30% to other contributions** (pro-rata). Policy: `docs/modules/01-partner-expenses.md` §6 | Confirmed |
+| Credit card promotion | Card used for inventory has **0% APR for 12 months from July 2026** (ends ~July 2027; exact date to confirm). Minimum payments now; paid in full afterwards. Watch the deadline. | Confirmed |
 
 Update this table when an item is confirmed. Never treat a "To confirm" item as fact in
 calculations: state it as an assumption.
@@ -209,8 +210,9 @@ and financials must not share that surface, and an ERP change must never risk th
 
 **Where the code lives:** business logic that must be exact (money, allocations, FX,
 landed cost) is written and tested in this repo under `src/lib/`, framework-free, so it
-can be used unchanged in the app. Screens are built in a Lovable project for the ERP
-(hosting decision: see `docs/integrations/lovable.md`).
+can be used unchanged in the app. Screens are built in the Lovable project **"Osmossi ERP"**
+(`fb88b4d7-9ebd-448d-bc45-9a2e4f392f78`); this repo moves to the GitHub repository Lovable
+creates for it (migration steps: `docs/integrations/lovable.md` §3).
 
 **Commands (this repo):**
 ```bash

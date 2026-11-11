@@ -1,7 +1,7 @@
 # Module 1: Partner Contributions & Capital Returns
 *Aportes de socios y devolución de capital*
 
-**Status:** Spec approved in principle (owner decisions 2026-11-11); open items in §9
+**Status:** Spec approved (owner decisions 2026-11-11)
 **Last updated:** 2026-11-11
 
 ---
@@ -110,6 +110,7 @@ submit; possible-duplicate warning (same partner, vendor, amount within 7 days).
    personal credit card, so a configurable share of the cash available (**proposed:
    70%**) goes to returning **inventory contributions**. The rest (**30%**) returns **other
    contributions** (licenses, supplies…) **pro-rata to what each partner is owed**.
+   **Confirmed by the owners: 70% inventory / 30% other.**
 5. **Nothing sits idle.** When one pool is fully returned, its share flows to the other
    pool. When both are fully returned, the remainder is shown split ⅓ each as a
    proposal; the owners decide whether to distribute it or keep it in the company.
@@ -138,6 +139,24 @@ Still to return: inventory on Juan Pablo's card **$3,000**; other contributions 
 | Andrea | — | $90 (30%) | $90 |
 | Lucelly | — | $30 (10%) | $30 |
 | **Total** | **$700** | **$300** | **$1,000** |
+
+### 6.1 Credit card promotion deadline
+The inventory bought on Juan Pablo's card is interest-free only until the 0% APR
+promotion ends (**12 months from July 2026, so around July 2027; exact date to confirm
+from the card statement**). After that, any unpaid balance starts costing interest, at
+rates typically far above any other financing cost the business has.
+
+The module therefore:
+- stores the **promotion end date** as a setting and shows a countdown on Home;
+- shows **inventory still to return vs. months left**, and the monthly amount needed to
+  clear it before the deadline;
+- turns the countdown **red** when, at the pace of the last 3 periods, the balance won't
+  be cleared in time, so the owners can raise the inventory share or slow new purchases.
+
+**Check the card terms for "deferred interest".** Some promotions charge *all* the
+interest from the purchase date if any balance remains when the promotion ends, not just
+interest going forward. If this card works that way, clearing the balance before the
+deadline matters even more.
 
 ### Why 70%
 Paying down the credit card fast is cheaper for everyone: credit card interest is
@@ -200,11 +219,11 @@ Built on Lovable Cloud (Supabase Postgres) using the same patterns as the storef
 |---|---|---|
 | 1 | Contributions are **investment (capital)** | **Decided** |
 | 2 | Return contributions **pro-rata to what each is owed**, before any profit split | **Decided** |
-| 3 | **No cash reserve**; larger share of cash to inventory on Juan Pablo's card | **Decided**; share proposed at **70%**, owners to confirm |
+| 3 | **No cash reserve**; larger share of cash to inventory on Juan Pablo's card | **Decided: 70% inventory / 30% other** |
 | 4 | Roles and ownership: Juan Pablo CEO, Andrea marketing, Lucelly operations; ⅓ each | **Decided** |
 | 5 | Import contributions since **2026-01-01** (operations began in 2026) | **Decided** |
-| 6 | Tech stack | **Decided**: reuse the storefront's stack and Lovable Cloud (CLAUDE.md §7) |
-| 7 | Is the credit card paid in full each month, or does it carry interest? If it carries interest, should interest charges be logged as contributions? | **Open** |
+| 6 | Tech stack and hosting | **Decided**: storefront's stack on its own Lovable project "Osmossi ERP" with Lovable Cloud (option A, `docs/integrations/lovable.md`) |
+| 7 | Credit card interest | **Decided**: card has a **0% APR promotion for 12 months starting July 2026**; Juan Pablo pays the minimum and will pay in full after the promotion. No interest to log today. If interest is ever charged on the inventory balance, it is logged as an *other* contribution. See §6.1. |
 
 ### To review with a CPA and attorney (not legal or tax advice)
 - **Write the policy into the LLC operating agreement.** Returning capital in proportion

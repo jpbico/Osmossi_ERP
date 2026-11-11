@@ -37,11 +37,21 @@ which then syncs to a new repository Lovable creates.
 
 | Option | How it works | Pros | Cons |
 |---|---|---|---|
-| **A. ERP as a Lovable project (recommended)** | Import this repo into a new Lovable project "Osmossi ERP" with Lovable Cloud; Lovable creates its GitHub repo; that repo becomes the single home for code **and** docs; this repo is archived. | Maximum reuse: same platform, billing, and editor as the storefront; partners can make small UI changes in Lovable; Claude works on the code through GitHub and on the project through the connector. | Repository changes; the "push to `main`" rule moves to the new repo. Lovable Cloud usage counts against the workspace plan. |
+| **A. ERP as a Lovable project (chosen 2026-11-11)** | Import this repo into a new Lovable project "Osmossi ERP" with Lovable Cloud; Lovable creates its GitHub repo; that repo becomes the single home for code **and** docs; this repo is archived. | Maximum reuse: same platform, billing, and editor as the storefront; partners can make small UI changes in Lovable; Claude works on the code through GitHub and on the project through the connector. | Repository changes; the "push to `main`" rule moves to the new repo. Lovable Cloud usage counts against the workspace plan. |
 | B. ERP in this repo, own Supabase project | Build here; create a standalone Supabase project and deploy the frontend to a static host. | Everything stays in `jpbico/Osmossi_ERP`. | Doesn't reuse Lovable Cloud; separate accounts and billing; free Supabase projects pause when inactive; no Lovable editor. |
 
-Until this is decided, framework-free business logic (money, allocations, FX) is built
-and tested in `src/lib/` here. It moves unchanged to whichever option is chosen.
+**Decision (2026-11-11): option A.** Lovable project **"Osmossi ERP"**
+(`fb88b4d7-9ebd-448d-bc45-9a2e4f392f78`), with project knowledge set to the ERP rules.
+
+Migration steps:
+1. ✅ Create the Lovable project and build the foundation (auth, roles, partners, layout,
+   brand, EN/ES).
+2. ⏳ **Owner action:** in the Lovable editor, connect the project to GitHub (Lovable
+   creates the new repository).
+3. Add that repository to Claude's sessions; push `CLAUDE.md`, `docs/`, `data/`,
+   `templates/`, and `src/lib/partner-capital/` (with tests) to its `main` branch.
+4. Move the "always push to `main`" rule to the new repository; mark this one as
+   archived in its README.
 
 ## 4. Rules
 
