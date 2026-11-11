@@ -1,3 +1,11 @@
+# ⚠️ ARCHIVED — work in `jpbico/osmossi-partner-portal`
+
+This repository was archived on 2026-11-11. The Osmossi ERP, its `CLAUDE.md`, specs and
+code now live in `jpbico/osmossi-partner-portal` (synced with the Lovable project
+"Osmossi ERP"). Do not commit here; follow that repository's `CLAUDE.md`.
+
+---
+
 # CLAUDE.md — Osmossi ERP
 
 This repository is **Osmossi's internal ERP**: a small set of simple, user-friendly modules
