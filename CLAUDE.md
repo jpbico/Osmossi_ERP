@@ -43,14 +43,16 @@ CFO and controller for a small e-commerce business: practical, rigorous, focused
 | Legal entity | LLC, registered in Florida | Confirmed |
 | Website | www.osmossi.com | Confirmed |
 | Business model | Multi-vendor online retail of premium handcrafted goods from Latin American artisan suppliers. **Not a manufacturer.** Sells to US customers. | Confirmed |
-| Storefront | Custom storefront built in Lovable; products, inventory, and checkout managed in **Shopify** | Confirmed |
+| Storefront | Custom storefront built in Lovable; products, inventory, and checkout managed in **Shopify** (`osmossi.myshopify.com`, Basic plan) | Confirmed |
+| Inventory location | One location: **Boca Raton**, FL | Confirmed (Shopify) |
 | Marketing | Instagram **@osmossi.purpose** (main channel) | Confirmed |
 | Bank | Wells Fargo | Confirmed |
-| Payment processors | Shopify Payments assumed; confirm any others (PayPal, Stripe, etc.) | **To confirm** |
+| Payment processors | **Shopify Payments** (all orders to date); confirm whether any others are used | Confirmed (Shopify) |
 | Accounting system | None yet; this ERP and its docs fill that gap | Confirmed |
 | Fiscal year | 2026; assumed calendar year (Jan–Dec) | **To confirm** |
 | Supplier terms | Wholesale purchases; suppliers paid in **local currency** (FX exposure) | Confirmed |
-| Supplier countries / currencies | e.g. COP, MXN, PEN, GTQ; list per supplier | **To confirm** |
+| Suppliers | **Pausayu** (SKU prefix `PAU`) and **Opalo** (`OPA`), the `vendor` field in Shopify | Confirmed (Shopify) |
+| Supplier countries / currencies | Country and currency per supplier (e.g. COP, PEN, MXN) | **To confirm** |
 | Team | Small family team; roles to be defined in SOPs | **To confirm** |
 
 Update this table when an item is confirmed. Never treat a "To confirm" item as fact in
@@ -142,7 +144,12 @@ These are non-negotiable; get them right before any UI polish.
 - Forecasts always have base, conservative, and optimistic scenarios, with the
   assumptions listed next to the numbers.
 
-**On data sources**
+**On data sources and integrations**
+- See `docs/integrations/` for the integration map and the Shopify integration design.
+  Keep it updated whenever a connection, scope, or data mapping changes.
+- **Use the Shopify connector** for all Shopify data in work sessions (analysis, audits,
+  checking ERP numbers). The running ERP connects through its own Shopify custom app
+  with read-only Admin API scopes; both use the same Admin GraphQL queries.
 - Shopify is the source of truth for products, orders, customers, payouts, and inventory
   levels. When a Shopify connection is available, pull data directly instead of asking
   for manual exports.
