@@ -48,11 +48,11 @@ No `write_*` scopes until there's a specific, approved need.
 
 | ERP module | Shopify data | Notes |
 |---|---|---|
-| 1. Products & landed cost | `products`, `variants.price`, `inventoryItem.unitCost`, `vendor` | ERP owns the **full landed cost**; Shopify `unitCost` is only an input to it. |
-| 2. Suppliers | `vendor` | Map each Shopify vendor to an ERP supplier record. |
-| 3. Purchasing & inventory | `inventoryLevels`, `inventoryItem` | Purchase orders and receipts live in the ERP; Shopify quantities are reconciled against them. |
-| 4. Sales & reconciliation | `orders`, `transactions.fees`, `refunds`, payouts, disputes | Sales booked gross; fees, refunds, and chargebacks separately. |
-| 6. KPIs | Orders, line items, customers, refunds | AOV, repeat rate, return rate, sell-through by SKU/supplier. Conversion rate needs Shopify Analytics. |
+| 2. Products & landed cost | `products`, `variants.price`, `inventoryItem.unitCost`, `vendor` | ERP owns the **full landed cost**; Shopify `unitCost` is only an input to it. |
+| 3. Suppliers | `vendor` | Map each Shopify vendor to an ERP supplier record. |
+| 4. Purchasing & inventory | `inventoryLevels`, `inventoryItem` | Purchase orders and receipts live in the ERP; Shopify quantities are reconciled against them. |
+| 5. Sales & reconciliation | `orders`, `transactions.fees`, `refunds`, payouts, disputes | Sales booked gross; fees, refunds, and chargebacks separately. |
+| 7. KPIs | Orders, line items, customers, refunds | AOV, repeat rate, return rate, sell-through by SKU/supplier. Conversion rate needs Shopify Analytics. |
 
 ## 5. Sync design
 
@@ -69,9 +69,9 @@ No `write_*` scopes until there's a specific, approved need.
 
 | # | Finding | Impact | Action |
 |---|---|---|---|
-| 1 | **Unit cost missing on 42 of 43 SKUs** | Margin can't be calculated for almost the whole catalog | Owners provide supplier price per SKU (in local currency); Module 1 captures it. |
+| 1 | **Unit cost missing on 42 of 43 SKUs** | Margin can't be calculated for almost the whole catalog | Owners provide supplier price per SKU (in local currency); Module 2 (Products & landed cost) captures it. |
 | 2 | **PAU001 Gold Key Placemat: cost $40.00 vs. price $37.00** | Sells at a loss before any shipping or fees, **or** the cost is wrong (e.g. it may be the set-of-4 cost; PAU001X4 sells at $148) | Owners confirm the real cost per unit. |
-| 3 | Country of origin and HS code empty on all SKUs | Needed for customs declarations and duty estimates | Fill in during Module 1 / supplier onboarding. |
+| 3 | Country of origin and HS code empty on all SKUs | Needed for customs declarations and duty estimates | Fill in during Module 2 / supplier onboarding. |
 | 4 | Payouts not readable by the connector (`read_shopify_payments` scope missing) | Payout-to-bank reconciliation not possible through the connector yet | Grant the scope to the ERP custom app (§3); use Shopify payout CSV exports meanwhile. |
 | 5 | 3 of 5 orders fully refunded; some line items have no SKU, and one SKU (`WAYUU-MOCHILA-GREY`) isn't in the catalog | Looks like test or legacy orders | Owners confirm which orders are real; ERP lets you tag test orders and exclude them from KPIs. |
 

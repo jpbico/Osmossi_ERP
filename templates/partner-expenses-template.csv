@@ -1,0 +1,2 @@
+date_paid,paid_by,vendor,description,category,amount,currency,fx_rate_to_usd,payment_method,recurring,receipt_file,related_supplier,notes
+2026-11-01,Juan Pablo,Anthropic,Claude license - November,Software & subscriptions,,USD,1,Personal card,Monthly,,,EXAMPLE ROW - replace amount and delete this row

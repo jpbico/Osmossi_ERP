@@ -53,7 +53,7 @@ CFO and controller for a small e-commerce business: practical, rigorous, focused
 | Supplier terms | Wholesale purchases; suppliers paid in **local currency** (FX exposure) | Confirmed |
 | Suppliers | **Pausayu** (SKU prefix `PAU`) and **Opalo** (`OPA`), the `vendor` field in Shopify | Confirmed (Shopify) |
 | Supplier countries / currencies | Country and currency per supplier (e.g. COP, PEN, MXN) | **To confirm** |
-| Team | Small family team; roles to be defined in SOPs | **To confirm** |
+| Team | **Juan Pablo** (CEO, founder), **Lucelly** (founder), **Andrea**; ownership % and roles to confirm | **To confirm** |
 
 Update this table when an item is confirmed. Never treat a "To confirm" item as fact in
 calculations: state it as an assumption.
@@ -67,14 +67,15 @@ own before starting the next.
 
 | # | Module | What it does (minimum useful version) |
 |---|---|---|
-| 1 | **Products & landed cost** | Per-SKU full landed cost: supplier price (local currency + FX rate + date), international freight, customs/duties, packaging, payment fees, outbound shipping, returns allowance. Shows margin % and contribution per unit; **flags any SKU or supplier that loses money** or falls below minimum margin. Suggests a price from a target margin. |
-| 2 | **Suppliers** | Supplier records, onboarding checklist, terms, currency, payment schedule, lead times, quality issues, and a simple scorecard (on-time %, defect %, sell-through). |
-| 3 | **Purchasing & inventory** | Purchase orders → receiving → landed cost allocated across the shipment → inventory on hand. Inventory counts and write-offs. Inventory turnover and days of inventory. |
-| 4 | **Sales & reconciliation** | Import Shopify orders, payouts, fees, refunds, and chargebacks; reconcile payouts to Wells Fargo deposits; show unmatched items. |
-| 5 | **Bookkeeping** | E-commerce chart of accounts, journal entries, expense capture with approval, month-end close checklist, period lock. |
-| 6 | **KPI dashboard & monthly report** | Revenue, gross margin %, contribution margin per order, AOV, conversion rate, CAC and ROAS by channel, repeat purchase rate, LTV, inventory turnover, days of inventory, sell-through by SKU/supplier, return rate, cash balance, runway. Monthly report: *what happened, why, what to do next.* |
-| 7 | **Forecast & budget** | 12–24 month P&L, cash-flow forecast, and break-even analysis; base/conservative/optimistic scenarios with visible assumptions; budget vs. actual; payback/ROI for investments (marketing, new suppliers, inventory buys, tools). |
-| 8 | **Compliance calendar** | US federal and Florida (plus any nexus states) obligations: sales tax nexus and filings, income tax and estimated payments, 1099s, import/customs, business license renewals, Florida annual report (due May 1). Alerts **in advance** of each deadline. |
+| 1 | **Partner expenses & reimbursements** | Partners log company costs they paid personally (licenses, products, supplies) with receipts; another partner approves; balance owed per partner; repayment proposal from available cash per the agreed policy. Spec: `docs/modules/01-partner-expenses.md`. |
+| 2 | **Products & landed cost** | Per-SKU full landed cost: supplier price (local currency + FX rate + date), international freight, customs/duties, packaging, payment fees, outbound shipping, returns allowance. Shows margin % and contribution per unit; **flags any SKU or supplier that loses money** or falls below minimum margin. Suggests a price from a target margin. |
+| 3 | **Suppliers** | Supplier records, onboarding checklist, terms, currency, payment schedule, lead times, quality issues, and a simple scorecard (on-time %, defect %, sell-through). |
+| 4 | **Purchasing & inventory** | Purchase orders → receiving → landed cost allocated across the shipment → inventory on hand. Inventory counts and write-offs. Inventory turnover and days of inventory. |
+| 5 | **Sales & reconciliation** | Import Shopify orders, payouts, fees, refunds, and chargebacks; reconcile payouts to Wells Fargo deposits; show unmatched items. |
+| 6 | **Bookkeeping** | E-commerce chart of accounts, journal entries, expense capture with approval, month-end close checklist, period lock. |
+| 7 | **KPI dashboard & monthly report** | Revenue, gross margin %, contribution margin per order, AOV, conversion rate, CAC and ROAS by channel, repeat purchase rate, LTV, inventory turnover, days of inventory, sell-through by SKU/supplier, return rate, cash balance, runway. Monthly report: *what happened, why, what to do next.* |
+| 8 | **Forecast & budget** | 12–24 month P&L, cash-flow forecast, and break-even analysis; base/conservative/optimistic scenarios with visible assumptions; budget vs. actual; payback/ROI for investments (marketing, new suppliers, inventory buys, tools). |
+| 9 | **Compliance calendar** | US federal and Florida (plus any nexus states) obligations: sales tax nexus and filings, income tax and estimated payments, 1099s, import/customs, business license renewals, Florida annual report (due May 1). Alerts **in advance** of each deadline. |
 
 ---
 
