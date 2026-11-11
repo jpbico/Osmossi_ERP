@@ -46,6 +46,9 @@ which then syncs to a new repository Lovable creates.
 Migration steps:
 1. ✅ Create the Lovable project and build the foundation (auth, roles, partners, layout,
    brand, EN/ES).
+   Done 2026-11-11 (6 credits). Framework is TanStack Start + React 19 (Lovable default).
+   ⏳ **Owner action:** add Juan Pablo's account first (becomes admin), then turn off
+   self-sign-up in Cloud → Users → Auth settings.
 2. ⏳ **Owner action:** in the Lovable editor, connect the project to GitHub (Lovable
    creates the new repository).
 3. Add that repository to Claude's sessions; push `CLAUDE.md`, `docs/`, `data/`,

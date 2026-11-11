@@ -194,7 +194,7 @@ stack and patterns, but **its own database**.
 
 | Layer | Choice | Reused from the storefront |
 |---|---|---|
-| Frontend | Vite + React 18 + TypeScript, Tailwind, shadcn/ui, react-hook-form + zod, TanStack Query, date-fns | Same libraries and versions |
+| Frontend | **TanStack Start** (React 19, file-based routes in `src/routes/`), Vite, TypeScript, Tailwind 4, shadcn/ui, react-hook-form + zod, TanStack Query, date-fns | Same component library, form, data and styling tools. The framework differs: Lovable now generates TanStack Start for new projects and it can't be changed; the storefront is on the older Vite + React 18 + react-router setup. Pure logic in `src/lib/` works in both. |
 | Backend | **Lovable Cloud** (Supabase): Postgres, auth, private storage (receipts), edge functions | Same platform, **separate project/database** |
 | Auth and roles | Supabase auth + `user_roles` table + `has_role()` security-definer function + RLS on every table | Same pattern; ERP roles: `admin`, `partner` |
 | Schema / migrations | Drizzle ORM + SQL migrations | Same tooling |
@@ -203,6 +203,11 @@ stack and patterns, but **its own database**.
 | Design | Navy `#1B2A4A`, gold `#B8943E`, cream `#F2EDE3`; **Lora** as the only typeface | Same brand tokens |
 | i18n | English/Spanish translation file + language context | Same pattern |
 | Tests | Vitest (unit), Playwright (end-to-end) | Same tools |
+
+**ERP project facts (built 2026-11-11):** tables `user_roles` (`admin`/`partner`) and
+`partners` (Juan Pablo, Andrea, Lucelly; weight 1 each) with RLS; `has_role()`; a
+bootstrap trigger that makes the **first account created** an admin. Self-sign-up must be
+**off** in Lovable Cloud auth settings (users are added by invitation only).
 
 **Why a separate database:** the storefront's database is public-facing (anonymous
 visitors can insert reviews and activity events). Partner capital accounts, receipts,
