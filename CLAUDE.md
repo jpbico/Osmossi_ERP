@@ -49,11 +49,13 @@ CFO and controller for a small e-commerce business: practical, rigorous, focused
 | Bank | Wells Fargo | Confirmed |
 | Payment processors | **Shopify Payments** (all orders to date); confirm whether any others are used | Confirmed (Shopify) |
 | Accounting system | None yet; this ERP and its docs fill that gap | Confirmed |
-| Fiscal year | 2026; assumed calendar year (Jan–Dec) | **To confirm** |
+| Operations start / fiscal year | Operations began in 2026; fiscal year 2026, assumed calendar year (Jan–Dec). Books start **2026-01-01**. | Start confirmed; calendar year to confirm |
 | Supplier terms | Wholesale purchases; suppliers paid in **local currency** (FX exposure) | Confirmed |
 | Suppliers | **Pausayu** (SKU prefix `PAU`) and **Opalo** (`OPA`), the `vendor` field in Shopify | Confirmed (Shopify) |
-| Supplier countries / currencies | Country and currency per supplier (e.g. COP, PEN, MXN) | **To confirm** |
-| Team | **Juan Pablo** (CEO, founder), **Lucelly** (founder), **Andrea**; ownership % and roles to confirm | **To confirm** |
+| Supplier countries / currencies | Storefront positions Osmossi as curated **Colombian** craft, so suppliers are likely paid in **COP**; confirm per supplier | **To confirm** |
+| Partners and roles | **Juan Pablo**: CEO, founder (also admin of the ERP). **Andrea**: marketing. **Lucelly**: operations, founder. | Confirmed |
+| Ownership | Equal: **⅓ each** (33.3%) | Confirmed |
+| Partner funding | Partners pay company costs personally; treated as **capital contributions**. Inventory is bought on Juan Pablo's personal credit card. Return policy: `docs/modules/01-partner-expenses.md` §6 | Confirmed |
 
 Update this table when an item is confirmed. Never treat a "To confirm" item as fact in
 calculations: state it as an assumption.
@@ -67,7 +69,7 @@ own before starting the next.
 
 | # | Module | What it does (minimum useful version) |
 |---|---|---|
-| 1 | **Partner expenses & reimbursements** | Partners log company costs they paid personally (licenses, products, supplies) with receipts; another partner approves; balance owed per partner; repayment proposal from available cash per the agreed policy. Spec: `docs/modules/01-partner-expenses.md`. |
+| 1 | **Partner contributions & capital returns** | Partners log company costs they paid personally (licenses, products, supplies) as capital contributions, with receipts; another partner approves; capital account per partner; capital-return calculation from cash available (inventory first, then pro-rata). Spec: `docs/modules/01-partner-expenses.md`. |
 | 2 | **Products & landed cost** | Per-SKU full landed cost: supplier price (local currency + FX rate + date), international freight, customs/duties, packaging, payment fees, outbound shipping, returns allowance. Shows margin % and contribution per unit; **flags any SKU or supplier that loses money** or falls below minimum margin. Suggests a price from a target margin. |
 | 3 | **Suppliers** | Supplier records, onboarding checklist, terms, currency, payment schedule, lead times, quality issues, and a simple scorecard (on-time %, defect %, sell-through). |
 | 4 | **Purchasing & inventory** | Purchase orders → receiving → landed cost allocated across the shipment → inventory on hand. Inventory counts and write-offs. Inventory turnover and days of inventory. |
@@ -146,11 +148,15 @@ These are non-negotiable; get them right before any UI polish.
   assumptions listed next to the numbers.
 
 **On data sources and integrations**
-- See `docs/integrations/` for the integration map and the Shopify integration design.
+- See `docs/integrations/` for the integration map, the Shopify integration design, and
+  how the ERP reuses the Lovable storefront's infrastructure (`lovable.md`).
   Keep it updated whenever a connection, scope, or data mapping changes.
 - **Use the Shopify connector** for all Shopify data in work sessions (analysis, audits,
   checking ERP numbers). The running ERP connects through its own Shopify custom app
   with read-only Admin API scopes; both use the same Admin GraphQL queries.
+- **Use the Lovable connector** to inspect the storefront project (code, database
+  status, connectors) and to manage the ERP's Lovable project. Any message sent to
+  Lovable's agent spends workspace credits: confirm with the owners before sending one.
 - Shopify is the source of truth for products, orders, customers, payouts, and inventory
   levels. When a Shopify connection is available, pull data directly instead of asking
   for manual exports.
@@ -179,17 +185,39 @@ These are non-negotiable; get them right before any UI polish.
 
 ---
 
-## 7. Tech stack
+## 7. Tech stack (decided 2026-11-11)
 
-**Proposed default, to confirm before the first module:**
-- Web app in **TypeScript** (React + Vite, Tailwind, shadcn/ui), matching the tools
-  already used for the Osmossi storefront in Lovable.
-- **PostgreSQL** (via Supabase) for data, auth, and row-level security.
-- Shopify Admin API (read-only scopes first) for orders, products, payouts, and inventory.
-- Hosting on a low-cost managed platform.
+**Rule: reuse what the Osmossi storefront already runs on.** The storefront is the
+Lovable project "Osmossi" (`8221713c-f888-4c9a-bdf4-0c87c0cd44d2`). The ERP uses the same
+stack and patterns, but **its own database**.
 
-Update this section once the stack is decided, including the commands to install, run,
-test, and deploy.
+| Layer | Choice | Reused from the storefront |
+|---|---|---|
+| Frontend | Vite + React 18 + TypeScript, Tailwind, shadcn/ui, react-hook-form + zod, TanStack Query, date-fns | Same libraries and versions |
+| Backend | **Lovable Cloud** (Supabase): Postgres, auth, private storage (receipts), edge functions | Same platform, **separate project/database** |
+| Auth and roles | Supabase auth + `user_roles` table + `has_role()` security-definer function + RLS on every table | Same pattern; ERP roles: `admin`, `partner` |
+| Schema / migrations | Drizzle ORM + SQL migrations | Same tooling |
+| Shopify | Edge function calling the **Admin** GraphQL API with a custom-app token stored as a secret (`docs/integrations/shopify.md`) | Same edge-function proxy pattern as `shopify-storefront`; the storefront's Storefront API token can't read costs or orders, so it is not reused |
+| Claude access | Owner-only MCP tools exposed by an edge function, so Claude can query ERP data | Same pattern as the storefront's `mcp` function |
+| Design | Navy `#1B2A4A`, gold `#B8943E`, cream `#F2EDE3`; **Lora** as the only typeface | Same brand tokens |
+| i18n | English/Spanish translation file + language context | Same pattern |
+| Tests | Vitest (unit), Playwright (end-to-end) | Same tools |
+
+**Why a separate database:** the storefront's database is public-facing (anonymous
+visitors can insert reviews and activity events). Partner capital accounts, receipts,
+and financials must not share that surface, and an ERP change must never risk the store.
+
+**Where the code lives:** business logic that must be exact (money, allocations, FX,
+landed cost) is written and tested in this repo under `src/lib/`, framework-free, so it
+can be used unchanged in the app. Screens are built in a Lovable project for the ERP
+(hosting decision: see `docs/integrations/lovable.md`).
+
+**Commands (this repo):**
+```bash
+npm install      # install dev dependencies
+npm test         # run unit tests (Vitest)
+npm run typecheck
+```
 
 ---
 
